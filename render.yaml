@@ -1,0 +1,58 @@
+# Render Blueprint: web service + background worker + Key Value (Redis-compatible).
+# MongoDB is hosted on MongoDB Atlas (set MONGODB_URI manually).
+# Plan names follow Render's plan IDs; verify current names/prices at render.com/pricing.
+services:
+  - type: web
+    name: rt-school-sms-web
+    runtime: node
+    plan: starter            # use "standard" or higher for production
+    numInstances: 1          # raise to scale web horizontally (app is stateless)
+    buildCommand: npm ci --omit=dev
+    startCommand: node backend/server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: ALLOW_MOCK_PROVIDER
+        value: "false"
+      - key: MONGODB_URI
+        sync: false
+      - key: ENCRYPTION_KEY
+        sync: false
+      - key: BASE_URL
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: rt-school-sms-redis
+          property: connectionString
+
+  - type: worker
+    name: rt-school-sms-worker
+    runtime: node
+    plan: starter            # scale up / add instances independently of the web service
+    numInstances: 1
+    buildCommand: npm ci --omit=dev
+    startCommand: node backend/workers/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOW_MOCK_PROVIDER
+        value: "false"
+      - key: MONGODB_URI
+        sync: false
+      - key: ENCRYPTION_KEY
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: rt-school-sms-redis
+          property: connectionString
+
+  - type: keyvalue
+    name: rt-school-sms-redis
+    plan: starter            # paid plans persist data; the free plan does not
+    maxmemoryPolicy: noeviction
+    ipAllowList: []          # internal connections only

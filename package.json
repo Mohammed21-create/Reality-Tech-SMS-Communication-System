@@ -1,0 +1,38 @@
+{
+  "name": "reality-tech-school-communication",
+  "version": "1.0.0",
+  "description": "Reality Tech School Communication System - multi-tenant SMS SaaS (Node.js, Express, MongoDB, BullMQ)",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node backend/server.js",
+    "start:worker": "node backend/workers/index.js",
+    "dev": "node --watch backend/server.js",
+    "dev:worker": "node --watch backend/workers/index.js",
+    "seed:superadmin": "node backend/scripts/seed.js superadmin",
+    "seed:demo": "node backend/scripts/seed.js demo",
+    "db:indexes": "node backend/scripts/seed.js indexes",
+    "test": "node tests/run.js unit",
+    "test:integration": "node tests/run.js integration",
+    "load:http": "node tests/load/http-load.js",
+    "load:queue": "node tests/load/queue-load.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^5.34.0",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "ioredis": "^5.4.2",
+    "mongoose": "^8.9.0",
+    "multer": "^2.0.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}

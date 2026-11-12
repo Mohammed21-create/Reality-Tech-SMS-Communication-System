@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Platform sign in · Reality Tech</title>
+<meta name="theme-color" content="#0f2148">
+<meta name="description" content="Reality Tech School Communication System">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RT Schools">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-portal="admin" data-realm="admin">
+<div class="auth-wrap">
+  <div class="offline-banner fixed-top" role="alert">You are offline. Sign-in needs an internet connection.</div>
+  <form class="auth-card" id="login-form" novalidate>
+    <img class="logo" src="/assets/icons/icon-192.png" alt="Reality Tech logo">
+    <h1>Reality Tech sign in</h1>
+    <p class="muted">Platform administration.</p>
+    <div id="msg" class="alert warn hidden mb" role="alert"></div>
+    <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required autofocus></div>
+    <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn w-full" id="login-btn" type="submit">Sign in</button>
+    <p class="small muted center mt">Looking for your school? <a href="/login.html">School sign in</a></p>
+  </form>
+</div>
+<script type="module" src="/js/pages/login.js"></script>
+</body>
+</html>
